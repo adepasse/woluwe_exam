@@ -114,30 +114,8 @@ fetch("questions/" + id + ".json")
     // Title
     document.getElementById("title").textContent = q.title;
 
-    const statementDiv = document.getElementById("statement");
-
-    // text
-    const p = document.createElement("p");
-    p.textContent = q.statement;
-    statementDiv.appendChild(p);
-
-    // image (optional)
-    if (q.image) {
-      const img = document.createElement("img");
-      img.src = "questions/illustrations/" + q.image;
-      img.alt = "Figure de la question";
-      img.style.maxWidth = "100%";
-      img.style.marginTop = "20px";
-
-      img.onerror = () => {
-        console.error("Image not found:", img.src);
-      };
-
-      statementDiv.appendChild(img);
-    }
-
-    console.log("Image field:", q.image);
-    console.log("Final URL:", "questions/illustrations/" + q.image);
+    // Statement
+    document.getElementById("statement").textContent = q.statement;
 
     // Tags
     const tagsDiv = document.getElementById("tags");
