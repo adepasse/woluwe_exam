@@ -114,18 +114,20 @@ fetch("questions/" + id + ".json")
     // Title
     document.getElementById("title").textContent = q.title;
 
-    const content = document.getElementById("content");
+    // Statement
+    document.getElementById("statement").textContent = q.statement;
 
-    const p = document.createElement("p");
-    p.textContent = q.statement;
-    content.appendChild(p);
-
+    // IMAGE (optional)
     if (q.image) {
       const img = document.createElement("img");
-      img.src = "questions/images/" + q.image;
+      img.src = "questions/illustrations/" + q.image;
+      img.alt = "Figure de la question";
       img.style.maxWidth = "100%";
-      content.appendChild(img);
+      img.style.marginTop = "20px";
+
+      document.getElementById("statement").after(img);
     }
+
     // Tags
     const tagsDiv = document.getElementById("tags");
     q.tags?.forEach(tag => {
