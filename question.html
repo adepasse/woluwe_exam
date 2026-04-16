@@ -128,7 +128,7 @@ fetch("questions/" + id + ".json")
     // IMAGE (optional)
     if (q.image) {
       const img = document.createElement("img");
-      img.src = "questions/illustrations/" + q.image;
+      img.src = "./questions/illustrations/" + q.image;
       img.alt = "Figure de la question";
       img.style.maxWidth = "100%";
       img.style.marginTop = "20px";
