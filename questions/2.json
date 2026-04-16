@@ -2,6 +2,7 @@
   "id": "2",
   "title": "Titre de la question",
   "statement": "Blablabla\nAvec plusieurs lignes.",
+  "image": "illustration.png"
   "tags": ["tag1", "tag2"],
   "documents": [
     { "name": "Énoncé PDF", "file": "enoncer.pdf" },
