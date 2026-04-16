@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Question</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: auto;
+}
+
+header {
+  margin-top: 10px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-top: 30px;
+}
+
+.grid {
+  display: flex;
+  gap: 40px;
+}
+
+.column {
+  flex: 1;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+.tag {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 3px 8px;
+  margin: 3px;
+  font-size: 0.9em;
+}
+
+a {
+  color: black;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1 id="title">Chargement...</h1>
+</header>
+
+<div class="section">
+  <h2>Énoncé</h2>
+  <p id="statement"></p>
+</div>
+
+<div class="section grid">
+  <div class="column">
+    <h2>Tags</h2>
+    <div id="tags"></div>
+  </div>
+
+  <div class="column">
+    <h2>Documents</h2>
+    <ul id="documents"></ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Examens</h2>
+  <ul id="exams"></ul>
+</div>
+
+<script>
+// Get ID from URL
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+if (!id) {
+  document.body.innerHTML = "<p>Erreur: aucun ID fourni</p>";
+}
+
+// Load JSON
+fetch("questions/" + id + ".json")
+  .then(res => {
+    if (!res.ok) throw new Error("Question introuvable");
+    return res.json();
+  })
+  .then(q => {
+
+    // Title
+    document.getElementById("title").textContent = q.title;
+
+    // Statement
+    document.getElementById("statement").textContent = q.statement;
+
+    // Tags
+    const tagsDiv = document.getElementById("tags");
+    q.tags?.forEach(tag => {
+      const span = document.createElement("span");
+      span.className = "tag";
+      span.textContent = tag;
+      tagsDiv.appendChild(span);
+    });
+
+    // Documents
+    const docList = document.getElementById("documents");
+    q.documents?.forEach(doc => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+
+      a.href = "documents/" + id + "/" + doc.file;
+      a.textContent = doc.name;
+      a.target = "_blank";
+
+      li.appendChild(a);
+      docList.appendChild(li);
+    });
+
+    // Exams
+    const examList = document.getElementById("exams");
+    q.exams?.forEach(exam => {
+      const li = document.createElement("li");
+      li.textContent = exam;
+      examList.appendChild(li);
+    });
+
+  })
+  .catch(err => {
+    document.body.innerHTML = "<p>Erreur: " + err.message + "</p>";
+  });
+</script>
+
+</body>
+</html>
