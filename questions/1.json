@@ -1,7 +1,7 @@
 {
-  "id": "q2",
-  "title": "Titre de la question",
-  "statement": "Blablabla\nAvec plusieurs lignes.",
+  "id": "1",
+  "title": "Système hydromécanique à l'équilibre",
+  "statement": "Sur l'illustration on voit des trucs et voila. Trouvez la force de frottement.",
   "tags": ["tag1", "tag2"],
   "documents": [
     { "name": "Énoncé PDF", "file": "enoncer.pdf" },
