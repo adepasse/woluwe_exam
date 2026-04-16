@@ -72,7 +72,7 @@ a {
 
 <div class="section">
   <h2>Énoncé</h2>
-  <p id="statement"></p>
+  <div id="statement"></div>
 </div>
 
 <div class="section grid">
@@ -114,10 +114,14 @@ fetch("questions/" + id + ".json")
     // Title
     document.getElementById("title").textContent = q.title;
 
-    // Statement
-    document.getElementById("statement").textContent = q.statement;
+    const statementDiv = document.getElementById("statement");
 
-    // IMAGE (optional)
+    // text
+    const p = document.createElement("p");
+    p.textContent = q.statement;
+    statementDiv.appendChild(p);
+
+    // image (optional)
     if (q.image) {
       const img = document.createElement("img");
       img.src = "questions/illustrations/" + q.image;
@@ -125,8 +129,15 @@ fetch("questions/" + id + ".json")
       img.style.maxWidth = "100%";
       img.style.marginTop = "20px";
 
-      document.getElementById("statement").after(img);
+      img.onerror = () => {
+        console.error("Image not found:", img.src);
+      };
+
+      statementDiv.appendChild(img);
     }
+
+    console.log("Image field:", q.image);
+    console.log("Final URL:", "questions/illustrations/" + q.image);
 
     // Tags
     const tagsDiv = document.getElementById("tags");
