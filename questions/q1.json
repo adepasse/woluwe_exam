@@ -1,7 +1,14 @@
 {
-  "id": "1",
-  "title": "...",
-  "tags": ["tag1"],
-  "years": ["2022-2023"],
-  "courses": ["LPHY1101"]
+  "id": "q1",
+  "title": "Titre de la question",
+  "statement": "Blablabla\nAvec plusieurs lignes.",
+  "tags": ["tag1", "tag2"],
+  "documents": [
+    { "name": "Énoncé PDF", "file": "enoncer.pdf" },
+    { "name": "Solution", "file": "solution.pdf" }
+  ],
+  "exams": [
+    "Examen 2022-2023 - LPHY1101 - Dupont",
+    "Examen 2023-2024 - LPHY1101 - Martin"
+  ]
 }
