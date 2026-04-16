@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Liste des questions</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header, section, footer {
+  margin: auto;
+  min-width: 500px;
+  max-width: 1000px;
+}
+
+header {
+  margin-top: 10px;
+}
+
+header h1 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+nav ul {
+  margin: 15px 0;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav a {
+  border: 1px solid black;
+  padding: 7px 15px;
+  margin-right: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+nav a:hover {
+  background-color: #AAAAAA;
+}
+
+section {
+  margin-top: 25px;
+}
+
+.filters {
+  display: flex;
+  gap: 20px;
+}
+
+select {
+  width: 200px;
+}
+
+.question {
+  border: 1px solid black;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.question a {
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+}
+
+.question a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>
+    <img src="https://uclouvain.sharepoint.com/sites/O365G-Assistantsphysique/Documents%20partages/General/test_list_exam/images/logo_UCL.png" height="25">
+    Examens de physique - Woluwe
+  </h1>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="questions.html">Liste des questions d'examen</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section>
+  <h2>Filtres</h2>
+
+  <div class="filters">
+    <div>
+      <label>Année</label><br>
+      <select id="yearFilter" multiple size="6"></select>
+    </div>
+
+    <div>
+      <label>Tags</label><br>
+      <select id="tagFilter" multiple size="6"></select>
+    </div>
+
+    <div>
+      <label>Cours</label><br>
+      <select id="courseFilter" multiple size="6"></select>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Questions</h2>
+  <div id="questionsList"></div>
+</section>
+
+<script>
+let allQuestions = [];
+
+// Load all question files (list manually for now)
+const files = ["q1.json", "q2.json"]; // <-- add more here
+
+Promise.all(files.map(f => fetch("https://uclouvain.sharepoint.com/sites/O365G-Assistantsphysique/Documents%20partages/General/test_list_exam/questions/" + f).then(r => r.json())))
+  .then(data => {
+    allQuestions = data;
+    initFilters();
+    displayQuestions(allQuestions);
+  });
+
+function initFilters() {
+  const years = new Set();
+  const tags = new Set();
+  const courses = new Set();
+
+  allQuestions.forEach(q => {
+    q.years?.forEach(y => years.add(y));
+    q.tags?.forEach(t => tags.add(t));
+    q.courses?.forEach(c => courses.add(c));
+  });
+
+  fillSelect("yearFilter", years);
+  fillSelect("tagFilter", tags);
+  fillSelect("courseFilter", courses);
+}
+
+function fillSelect(id, values) {
+  const select = document.getElementById(id);
+
+  values.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", applyFilters);
+}
+
+function getSelected(id) {
+  return [...document.getElementById(id).selectedOptions].map(o => o.value);
+}
+
+function applyFilters() {
+  const years = getSelected("yearFilter");
+  const tags = getSelected("tagFilter");
+  const courses = getSelected("courseFilter");
+
+  const filtered = allQuestions.filter(q => {
+
+    const matchYear =
+      years.length === 0 ||
+      (q.years && q.years.some(y => years.includes(y)));
+
+    const matchTag =
+      tags.length === 0 ||
+      (q.tags && q.tags.some(t => tags.includes(t)));
+
+    const matchCourse =
+      courses.length === 0 ||
+      (q.courses && q.courses.some(c => courses.includes(c)));
+
+    return matchYear && matchTag && matchCourse;
+  });
+
+  displayQuestions(filtered);
+}
+
+function displayQuestions(list) {
+  const container = document.getElementById("questionsList");
+  container.innerHTML = "";
+
+  list.forEach(q => {
+    const div = document.createElement("div");
+    div.className = "question";
+
+    div.innerHTML = `
+      <a href="question.html?id=${q.id}">${q.title}</a>
+    `;
+
+    container.appendChild(div);
+  });
+}
+</script>
+
+</body>
+</html>
