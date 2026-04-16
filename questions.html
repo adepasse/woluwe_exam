@@ -127,12 +127,24 @@ let allQuestions = [];
 // Load all question files (list manually for now)
 const files = ["q1.json", "q2.json"]; // <-- add more here
 
-Promise.all(files.map(f => fetch("questions/" + f).then(r => r.json())))
-  .then(data => {
-    allQuestions = data;
-    initFilters();
-    displayQuestions(allQuestions);
-  });
+Promise.all(
+  files.map(f =>
+    fetch("questions/" + f)
+      .then(r => {
+        if (!r.ok) throw new Error("Fetch failed: " + f);
+        return r.json();
+      })
+  )
+)
+.then(data => {
+  console.log("Loaded:", data);
+  allQuestions = data;
+  initFilters();
+  displayQuestions(allQuestions);
+})
+.catch(err => {
+  console.error("ERROR:", err);
+});
 
 function initFilters() {
   const years = new Set();
