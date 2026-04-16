@@ -111,11 +111,34 @@ fetch("questions/" + id + ".json")
   })
   .then(q => {
 
-    // Title
-    document.getElementById("title").textContent = q.title;
+    const title = document.getElementById("title");
+    const statementDiv = document.getElementById("statement");
 
-    // Statement
-    document.getElementById("statement").textContent = q.statement;
+    // TITLE
+    title.textContent = q.title;
+
+    // clear statement container
+    statementDiv.innerHTML = "";
+
+    // STATEMENT
+    const p = document.createElement("p");
+    p.textContent = q.statement;
+    statementDiv.appendChild(p);
+
+    // IMAGE (optional)
+    if (q.image) {
+      const img = document.createElement("img");
+      img.src = "questions/illustrations/" + q.image;
+      img.alt = "Figure de la question";
+      img.style.maxWidth = "100%";
+      img.style.marginTop = "20px";
+
+      img.onerror = () => {
+        console.warn("Image not found:", img.src);
+      };
+
+      statementDiv.appendChild(img);
+    }
 
     // Tags
     const tagsDiv = document.getElementById("tags");
