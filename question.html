@@ -132,6 +132,8 @@ fetch("questions/" + id + ".json")
       img.alt = "Figure de la question";
       img.style.maxWidth = "100%";
       img.style.marginTop = "20px";
+      img.style.border = "3px solid red";
+      img.style.display = "block";
 
       img.onerror = () => {
         console.warn("Image not found:", img.src);
