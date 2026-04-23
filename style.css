@@ -68,7 +68,6 @@ h1 {
 .filters {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
 /* ---------- LISTS ---------- */
