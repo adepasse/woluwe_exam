@@ -63,6 +63,17 @@ h1 {
   flex: 1;
 }
 
+/* ---------- FILTERS ---------- */
+
+.filters {
+  display: flex;
+  gap: 20px;
+}
+
+.filters > div {
+  flex: 1;
+}
+
 /* ---------- LISTS ---------- */
 
 ul {
