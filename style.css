@@ -71,7 +71,11 @@ h1 {
 }
 
 .filters select {
-  width: 200px;
+  min-width: 180px;
+}
+
+.filters > div {
+  flex: 0 0 auto;   /* no stretching */
 }
 
 /* ---------- LISTS ---------- */
