@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Ajouter une question</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: auto;
+}
+
+input, textarea {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+textarea {
+  height: 120px;
+}
+
+.dropzone {
+  border: 2px dashed #888;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>
+    <img src="images/logo_UCL.png" height="25">
+    Examens de physique - Woluwe
+  </h1>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="questions.html">Liste des questions d'examen</a></li>
+      <li><a href="add_question_form.html">Ajouter une question</a></li>
+    </ul>
+  </nav>
+</header>
+
+<h1>Ajouter une question</h1>
+
+<form id="form">
+
+  <label>Titre</label>
+  <input type="text" id="title" required>
+
+  <label>Énoncé</label>
+  <textarea id="statement" required></textarea>
+
+  <label>Tags (séparés par des virgules)</label>
+  <input type="text" id="tags">
+
+  <label>Années</label>
+  <input type="text" id="years" placeholder="2023-2024, 2024-2025">
+
+  <label>Cours</label>
+  <input type="text" id="courses" placeholder="LPHY1101">
+
+  <label>Image</label>
+  <input type="file" id="image">
+
+  <label>Documents</label>
+  <div class="dropzone" id="dropzone">
+    Glissez-déposez des fichiers ici
+  </div>
+
+  <button type="submit">Générer la question</button>
+
+</form>
+
+<h2>JSON généré</h2>
+<pre id="output"></pre>
+
+<script>
+let droppedFiles = [];
+
+const dropzone = document.getElementById("dropzone");
+
+dropzone.addEventListener("dragover", e => {
+  e.preventDefault();
+});
+
+dropzone.addEventListener("drop", e => {
+  e.preventDefault();
+  droppedFiles = [...e.dataTransfer.files];
+  dropzone.textContent = droppedFiles.length + " fichier(s) ajouté(s)";
+});
+
+document.getElementById("form").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const id = "q" + Date.now(); // simple unique ID
+
+  const title = document.getElementById("title").value;
+  const statement = document.getElementById("statement").value;
+
+  const tags = document.getElementById("tags").value
+    .split(",").map(t => t.trim()).filter(t => t);
+
+  const years = document.getElementById("years").value
+    .split(",").map(t => t.trim()).filter(t => t);
+
+  const courses = document.getElementById("courses").value
+    .split(",").map(t => t.trim()).filter(t => t);
+
+  const imageInput = document.getElementById("image");
+  const imageFile = imageInput.files[0];
+
+  const documents = droppedFiles.map(f => ({
+    name: f.name,
+    file: f.name
+  }));
+
+  const json = {
+    id,
+    title,
+    statement,
+    tags,
+    years,
+    courses,
+    documents,
+    exams: []
+  };
+
+  if (imageFile) {
+    json.image = imageFile.name;
+  }
+
+  document.getElementById("output").textContent =
+    JSON.stringify(json, null, 2);
+});
+</script>
+
+</body>
+</html>
