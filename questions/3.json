@@ -1,0 +1,14 @@
+{
+  "id": "3",
+  "title": "celui-là il est pas facile",
+  "statement": "ha nan en fait ça va",
+  "tags": ["tag3"],
+  "documents": [
+    { "name": "Énoncé PDF", "file": "enoncer.pdf" },
+  ],
+  "years": ["2024-2025"],
+  "courses": ["LPHY1102"],
+  "exams": [
+    "Examen 2024-2025 - LPHY1101 - Martin"
+  ]
+}
