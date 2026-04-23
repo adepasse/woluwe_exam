@@ -71,10 +71,6 @@ h1 {
   flex-wrap: wrap;
 }
 
-.filters > div {
-  flex: 0 0 250px;  /* fixed width */
-}
-
 /* ---------- LISTS ---------- */
 
 ul {
