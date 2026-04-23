@@ -71,7 +71,7 @@ h1 {
 }
 
 .filters select {
-  min-width: 180px;
+  min-width: 100px;
 }
 
 .filters > div {
