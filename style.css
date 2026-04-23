@@ -68,10 +68,11 @@ h1 {
 .filters {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .filters > div {
-  flex: 1;
+  flex: 0 0 250px;  /* fixed width */
 }
 
 /* ---------- LISTS ---------- */
