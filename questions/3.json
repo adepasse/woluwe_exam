@@ -4,7 +4,7 @@
   "statement": "ha nan en fait ça va",
   "tags": ["tag3"],
   "documents": [
-    { "name": "Énoncé PDF", "file": "enoncer.pdf" },
+    { "name": "Énoncé PDF", "file": "enoncer.pdf" }
   ],
   "years": ["2024-2025"],
   "courses": ["LPHY1102"],
