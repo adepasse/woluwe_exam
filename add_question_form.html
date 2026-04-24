@@ -9,20 +9,7 @@
 
 <body>
 
-<header>
-  <h1>
-    <img src="images/logo_UCL.png" height="25">
-    Examens de physique - Woluwe
-  </h1>
-
-  <nav>
-    <ul>
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="questions.html">Liste des questions d'examen</a></li>
-      <li><a href="add_question_form.html">Ajouter une question</a></li>
-    </ul>
-  </nav>
-</header>
+<div id="site-header"></div>
 
 <form id="form">
 
@@ -55,6 +42,14 @@
 
 <h2>JSON généré</h2>
 <pre id="output"></pre>
+
+<script>
+fetch("header.html")
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById("site-footer").innerHTML = data;
+  });
+</script>
 
 <script>
 let droppedFiles = [];
